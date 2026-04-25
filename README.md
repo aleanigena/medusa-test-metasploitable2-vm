@@ -3,40 +3,98 @@ teste de força bruta no metasploitable2 a partir do kali com medusa
 
 <img width="1904" height="1074" alt="projeto em execução" src="https://github.com/user-attachments/assets/6e9ada02-6daa-4d16-85c5-6a092def2234" />
 
-Resumo do aprendizado (tópicos)
-1. Configuração de ambiente
-Criação de laboratório isolado com VirtualBox (rede host-only).
-Integração entre máquinas vulneráveis e máquina atacante.
-Importância do isolamento para testes éticos e seguros.
-2. Fundamentos de ataques de força bruta
-Diferença entre:
-Brute force clássico (todas combinações)
-Dictionary attack (wordlists)
-Password spraying (uma senha para vários usuários)
-Impacto da complexidade de senha no tempo de ataque.
-3. Uso da ferramenta Medusa
-Estrutura de comandos por protocolo (FTP, SMB, HTTP).
-Uso de parâmetros para paralelismo e otimização.
-Integração com listas de usuários e senhas.
-4. Exploração de serviços vulneráveis
-FTP: autenticação sem proteção contra múltiplas tentativas.
-SMB: enumeração de usuários + spraying.
-Web (DVWA): automação de login via requisições HTTP.
-5. Wordlists e estratégia de ataque
-Criação de listas simples e direcionadas.
-Eficiência maior com dados contextualizados (nomes comuns, padrões).
-Relação entre tamanho da lista e tempo de execução.
-6. Validação de acessos
-Identificação de credenciais válidas via resposta do serviço.
-Confirmação manual após descoberta.
-Importância de evitar falsos positivos.
-7. Medidas de mitigação
-Políticas de senha forte (comprimento, complexidade).
-Rate limiting / bloqueio após tentativas.
-Implementação de MFA (autenticação multifator).
-Monitoramento de logs e alertas.
-Desativação de serviços desnecessários.
-8. Visão prática de segurança ofensiva
-Entendimento real de como ataques são executados.
-Correlação direta entre vulnerabilidade e exploração.
-Base para atuação defensiva mais eficiente (Blue Team).
+🔐 Projeto Prático: Testes de Força Bruta com Kali Linux e Medusa
+📌 Objetivo
+
+Implementar, documentar e demonstrar ataques simulados de força bruta utilizando o Kali Linux e a ferramenta Medusa em ambientes vulneráveis como Metasploitable 2 e DVWA, com foco em análise prática e aplicação de medidas de mitigação.
+
+🧱 Estrutura do Ambiente
+🔧 Ferramentas utilizadas
+Kali Linux (máquina atacante)
+Metasploitable 2 (máquina vulnerável)
+DVWA (aplicação web vulnerável)
+VirtualBox
+🌐 Configuração de rede
+Tipo: Host-Only
+Comunicação isolada entre VMs
+Sem acesso externo (ambiente controlado)
+⚙️ Cenários de Ataque Simulados
+1. 🔓 Força Bruta em FTP
+
+Objetivo: Descobrir credenciais válidas no serviço FTP.
+
+Exemplo de comando:
+
+medusa -h <IP_ALVO> -u msfadmin -P wordlist.txt -M ftp
+
+Resultado esperado:
+
+Identificação de login válido
+Acesso ao serviço FTP
+2. 🌐 Ataque a Login Web (DVWA)
+
+Objetivo: Automatizar tentativas de login via formulário web.
+
+Abordagem:
+
+Interceptação da requisição (Burp Suite ou navegador)
+Repetição com variações de senha
+
+Exemplo de uso com Medusa (HTTP):
+
+medusa -h <IP_ALVO> -u admin -P wordlist.txt -M http -m FORM:"/dvwa/login.php:username=^USER^&password=^PASS^:F=Login failed"
+3. 🗂️ Password Spraying em SMB
+
+Objetivo: Testar uma senha comum contra múltiplos usuários.
+
+Exemplo de comando:
+
+medusa -h <IP_ALVO> -U users.txt -p senha123 -M smbnt
+
+Técnica aplicada:
+
+Enumeração de usuários
+Teste de senha única em larga escala
+📄 Wordlists Utilizadas
+
+Exemplo simples:
+
+123456
+password
+admin
+msfadmin
+senha123
+
+Observação:
+
+Listas pequenas para testes rápidos
+Em cenários reais, usar listas maiores e contextualizadas
+✅ Validação de Resultados
+Identificação de credenciais válidas via output do Medusa
+Teste manual de autenticação
+Registro de sucessos e falhas
+🛡️ Medidas de Mitigação
+🔐 Políticas de senha forte
+⛔ Bloqueio após múltiplas tentativas
+🧠 Autenticação multifator (MFA)
+📊 Monitoramento de logs
+🔕 Desativação de serviços desnecessários
+📚 Conclusão
+
+Os testes demonstraram que sistemas sem proteção adequada são rapidamente comprometidos por ataques automatizados. O uso do Medusa evidenciou a importância de controles básicos de segurança, como limitação de tentativas e uso de senhas robustas.
+
+A prática em laboratório com Metasploitable 2 e DVWA permitiu compreender, de forma aplicada, a relação entre vulnerabilidade e exploração.
+
+📖 Aprendizados (Resumo)
+📌 Configuração de ambiente isolado
+📌 Tipos de ataque (brute force, dictionary, spraying)
+📌 Uso prático do Medusa
+📌 Exploração de serviços reais (FTP, SMB, HTTP)
+📌 Criação e uso de wordlists
+📌 Validação de credenciais
+📌 Implementação de medidas defensivas
+📌 Visão prática de segurança ofensiva
+⚠️ Aviso
+
+Este projeto foi realizado em ambiente controlado para fins educacionais.
+Não utilize essas técnicas em sistemas sem autorização.
