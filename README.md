@@ -4,121 +4,143 @@ teste de força bruta no metasploitable2 a partir do kali com medusa
 <img width="1904" height="1074" alt="projeto em execução" src="https://github.com/user-attachments/assets/6e9ada02-6daa-4d16-85c5-6a092def2234" />
 
 
-🔐 Projeto Prático: Testes de Força Bruta com Kali Linux e Medusa
-📌 Objetivo
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
 
-Implementar, documentar e demonstrar ataques simulados de força bruta utilizando o Kali Linux e a ferramenta Medusa em ambientes vulneráveis como Metasploitable 2 e DVWA, com foco em análise prática e aplicação de medidas de mitigação.
+<h1>🔐 Projeto Prático: Testes de Força Bruta</h1>
 
+<p>
+Implementação e documentação de ataques simulados utilizando 
+<strong>Kali Linux</strong> e <strong>Medusa</strong> em ambientes vulneráveis 
+como <strong>Metasploitable 2</strong> e <strong>DVWA</strong>.
+</p>
 
-🧱 Estrutura do Ambiente
-🔧 Ferramentas utilizadas
-Kali Linux (máquina atacante)
-Metasploitable 2 (máquina vulnerável)
-DVWA (aplicação web vulnerável)
-VirtualBox
-🌐 Configuração de rede
-Tipo: Host-Only
-Comunicação isolada entre VMs
-Sem acesso externo (ambiente controlado)
-⚙️ Cenários de Ataque Simulados
-1. 🔓 Força Bruta em FTP
+<hr>
 
-Objetivo: Descobrir credenciais válidas no serviço FTP.
+<h2>📌 Objetivo</h2>
+<p>
+Simular cenários reais de ataque de força bruta para análise prática de vulnerabilidades
+e aplicação de medidas de mitigação em serviços de autenticação.
+</p>
 
-Exemplo de comando:
+<hr>
 
-medusa -h <IP_ALVO> -u msfadmin -P wordlist.txt -M ftp
+<h2>🧱 Estrutura do Ambiente</h2>
 
-Resultado esperado:
+<h3>🔧 Ferramentas</h3>
+<ul>
+  <li>Kali Linux (máquina atacante)</li>
+  <li>Metasploitable 2 (máquina vulnerável)</li>
+  <li>DVWA (aplicação web vulnerável)</li>
+  <li>VirtualBox</li>
+</ul>
 
-Identificação de login válido
-Acesso ao serviço FTP
-2. 🌐 Ataque a Login Web (DVWA)
+<h3>🌐 Rede</h3>
+<ul>
+  <li>Modo: <strong>Host-Only</strong></li>
+  <li>Ambiente isolado</li>
+  <li>Sem acesso externo</li>
+</ul>
 
-Objetivo: Automatizar tentativas de login via formulário web.
+<hr>
 
-Abordagem:
+<h2>⚙️ Cenários de Ataque</h2>
 
-Interceptação da requisição (Burp Suite ou navegador)
-Repetição com variações de senha
+<h3>1. 🔓 Força Bruta em FTP</h3>
 
-Exemplo de uso com Medusa (HTTP):
+<p><strong>Objetivo:</strong> Descobrir credenciais válidas.</p>
 
-medusa -h <IP_ALVO> -u admin -P wordlist.txt -M http -m FORM:"/dvwa/login.php:username=^USER^&password=^PASS^:F=Login failed"
-3. 🗂️ Password Spraying em SMB
+<pre><code>medusa -h &lt;IP_ALVO&gt; -u msfadmin -P wordlist.txt -M ftp
+</code></pre>
 
-Objetivo: Testar uma senha comum contra múltiplos usuários.
+<p><strong>Resultado:</strong> Acesso autenticado ao serviço FTP.</p>
 
-Exemplo de comando:
+---
 
-medusa -h <IP_ALVO> -U users.txt -p senha123 -M smbnt
+<h3>2. 🌐 Ataque a Login Web (DVWA)</h3>
 
-Técnica aplicada:
+<p><strong>Objetivo:</strong> Automatizar tentativas em formulário web.</p>
 
-Enumeração de usuários
-Teste de senha única em larga escala
-📄 Wordlists Utilizadas
+<pre><code>medusa -h &lt;IP_ALVO&gt; -u admin -P wordlist.txt -M http -m FORM:"/dvwa/login.php:username=^USER^&password=^PASS^:F=Login failed"
+</code></pre>
 
-Exemplo simples:
+---
 
-123456
+<h3>3. 🗂️ Password Spraying em SMB</h3>
 
+<p><strong>Objetivo:</strong> Testar uma senha em múltiplos usuários.</p>
+
+<pre><code>medusa -h &lt;IP_ALVO&gt; -U users.txt -p senha123 -M smbnt
+</code></pre>
+
+<hr>
+
+<h2>📄 Wordlist (Exemplo)</h2>
+
+<pre><code>123456
 password
-
 admin
-
 msfadmin
-
 senha123
+</code></pre>
 
-Observação:
+<hr>
 
-Listas pequenas para testes rápidos
-Em cenários reais, usar listas maiores e contextualizadas
+<h2>✅ Validação</h2>
 
-✅ Validação de Resultados
-Identificação de credenciais válidas via output do Medusa
-Teste manual de autenticação
-Registro de sucessos e falhas
+<ul>
+  <li>Identificação de credenciais válidas no output</li>
+  <li>Teste manual de login</li>
+  <li>Registro dos resultados</li>
+</ul>
 
-🛡️ Medidas de Mitigação
+<hr>
 
-🔐 Políticas de senha forte
+<h2>🛡️ Mitigação</h2>
 
-⛔ Bloqueio após múltiplas tentativas
+<ul>
+  <li>Políticas de senha forte</li>
+  <li>Bloqueio por tentativas</li>
+  <li>MFA (autenticação multifator)</li>
+  <li>Monitoramento de logs</li>
+  <li>Desativação de serviços desnecessários</li>
+</ul>
 
-🧠 Autenticação multifator (MFA)
+<hr>
 
-📊 Monitoramento de logs
+<h2>📚 Conclusão</h2>
 
-🔕 Desativação de serviços desnecessários
+<p>
+Ambientes sem proteção adequada são rapidamente comprometidos por ataques automatizados.
+A prática demonstrou a importância de controles básicos de segurança para reduzir riscos.
+</p>
 
-📚 Conclusão
+<hr>
 
-Os testes demonstraram que sistemas sem proteção adequada são rapidamente comprometidos por ataques automatizados. O uso do Medusa evidenciou a importância de controles básicos de segurança, como limitação de tentativas e uso de senhas robustas.
+<h2>📖 Aprendizados</h2>
 
-A prática em laboratório com Metasploitable 2 e DVWA permitiu compreender, de forma aplicada, a relação entre vulnerabilidade e exploração.
+<ul>
+  <li>Configuração de laboratório isolado</li>
+  <li>Tipos de ataque: brute force, dictionary, spraying</li>
+  <li>Uso prático do Medusa</li>
+  <li>Exploração de FTP, SMB e HTTP</li>
+  <li>Criação e uso de wordlists</li>
+  <li>Validação de acessos</li>
+  <li>Implementação de defesa</li>
+</ul>
 
-📖 Aprendizados (Resumo)
+<hr>
 
-📌 Configuração de ambiente isolado
+<h2>⚠️ Aviso</h2>
 
-📌 Tipos de ataque (brute force, dictionary, spraying)
+<p>
+Este projeto é exclusivamente educacional em parceria e estudos com web.dio.me . Não utilize estas técnicas sem autorização.
+</p>
 
-📌 Uso prático do Medusa
-
-📌 Exploração de serviços reais (FTP, SMB, HTTP)
-
-📌 Criação e uso de wordlists
-
-📌 Validação de credenciais
-
-📌 Implementação de medidas defensivas
-
-📌 Visão prática de segurança ofensiva
-
-⚠️ Aviso
-
-Este projeto foi realizado em ambiente controlado para fins educacionais.
-Não utilize essas técnicas em sistemas sem autorização.
+</body>
+</html>
